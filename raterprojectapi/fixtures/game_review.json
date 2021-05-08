@@ -1,0 +1,32 @@
+[
+    {
+        "model": "raterprojectapi.game_review",
+        "pk": 1,
+        "fields": {
+            "review_descrip": "It was an god game",
+            "gamer_id": 1,
+            "game_id": 1,
+            "rating": 5
+        }
+    },
+    {
+        "model": "raterprojectapi.game_review",
+        "pk": 2,
+        "fields": {
+            "review_descrip": "It was an okay game",
+            "gamer_id": 1,
+            "game_id": 1,
+            "rating": 5
+        }
+    },
+    {
+        "model": "raterprojectapi.game_review",
+        "pk": 3,
+        "fields": {
+            "review_descrip": "It was an great game",
+            "gamer_id": 1,
+            "game_id": 1,
+            "rating": 5
+        }
+    }
+]
