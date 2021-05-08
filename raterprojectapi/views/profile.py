@@ -31,7 +31,7 @@ class Profile(ViewSet):
         profile["game"] = game.data
 
         return Response(profile)
-
+# Serializers allow complex data such as querysets and model instances to be converted to native Python datatypes that can then be easily rendered into JSON, XML or other content types.
 class UserSerializer(serializers.ModelSerializer):
     """JSON serializer for gamer's related Django user"""
     class Meta:
