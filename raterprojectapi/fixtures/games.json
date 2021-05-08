@@ -1,0 +1,41 @@
+[
+    {
+        "model": "levelupapi.game",
+        "pk": 1,
+        "fields": {
+            "title": "Welcome To",
+            "description": "P2P",
+            "year_released": 2020,
+            "estimated_time_to_play": 30,
+            "number_of_players": 4,
+            "age_recommendation": 3,
+            "designer": 1
+        }
+    },
+    {
+        "model": "levelupapi.game",
+        "pk": 2,
+        "fields": {
+            "title": "Settlers of Catan",
+            "description": "Mega World play",
+            "year_released": 2020,
+            "estimated_time_to_play": 30,
+            "number_of_players": 4,
+            "age_recommendation": 4,
+            "designer": 2
+        }
+    },
+    {
+        "model": "levelupapi.game",
+        "pk": 3,
+        "fields": {
+            "title": "Dungeons & Dragons",
+            "description": "Strength in numbers",
+            "year_released": 2020,
+            "estimated_time_to_play": 30,
+            "number_of_players": 5,
+            "age_recommendation": 3,
+            "designer": 1
+        }
+    }
+]

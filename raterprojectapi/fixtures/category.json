@@ -1,0 +1,23 @@
+[
+    {
+        "model": "raterprojectapi.category",
+        "pk": 1,
+        "fields": {
+            "category": "Board game"
+        }
+    },
+    {
+        "model": "raterprojectapi.category",
+        "pk": 2,
+        "fields": {
+            "category": "Role-playing game"
+        }
+    },
+    {
+        "model": "raterprojectapi.category",
+        "pk": 3,
+        "fields": {
+            "category": "MMO game"
+        }
+    }
+]

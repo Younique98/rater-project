@@ -1,0 +1,29 @@
+[
+    {
+        "model": "raterprojectapi.gamer",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "bio": "Me",
+            "currently_playing_image": "image.png"
+        }
+    },
+    {
+        "model": "raterprojectapi.gamer",
+        "pk": 2,
+        "fields": {
+            "user": 2,
+            "bio": "You",
+            "currently_playing_image": "image2.png"
+        }
+    },
+    {
+        "model": "raterprojectapi.gamer",
+        "pk": 3,
+        "fields": {
+            "user": 3,
+            "bio": "They",
+            "currently_playing_image": "image3.png"
+        }
+    }
+]
