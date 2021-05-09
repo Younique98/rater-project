@@ -8,5 +8,4 @@ class Game(models.Model):
     estimated_time_to_play = models.IntegerField()
     number_of_players = models.IntegerField()
     age_recommendation = models.IntegerField()
-    designer = models.ForeignKey("Gamer", on_delete=models.CASCADE, related_name="creator")
-    
+    designer = models.CharField(max_length=50)

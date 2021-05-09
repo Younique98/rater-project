@@ -18,7 +18,7 @@ class Games(ViewSet):
         Returns:
             Response -- JSON serialized game instance
         """
-
+        gamer = Gamer.objects.get(user=request.auth.user)
         # Uses the token passed in the `Authorization` header
         # gamer = Gamer.objects.get(user=request.auth.user)
 
@@ -41,8 +41,8 @@ class Games(ViewSet):
         category = Category.objects.get(pk=request.data["categoryId"])
         game.category = category
 
-        game_review = GameReview.objects.get(pk=request.data["gameReviewId"])
-        game.game_review = game_review
+        # game_review = GameReview.objects.get(pk=request.data["gameReviewId"])
+        # game.game_review = game_review
 
         # Try to save the new game to the database, then
         # serialize the game instance as JSON, and send the
@@ -91,7 +91,7 @@ class Games(ViewSet):
         game.year_released = request.data["yearReleased"]
         game.estimated_time_to_play = request.data["estimatedTimeToPlay"]
         game.age_recommendation = request.data["ageRecommendation"]
-        game.designer = request.data["designer"]
+        game.designer = request.data['designer']
         game.gamer = gamer
 
         # Use the Django ORM to get the record from the database
@@ -145,6 +145,70 @@ class Games(ViewSet):
             games, many=True, context={'request': request})
         return Response(serializer.data)
 
+    def signup(self, request, pk=None):
+        """Managing gamers signing up for games"""
+
+        # A gamer wants to sign up for an game
+        if request.method == "POST":
+            # The pk would be `2` if the URL above was requested
+            game = Game.objects.get(pk=pk)
+
+            # Django uses the `Authorization` header to determine
+            # which user is making the request to sign up
+            gamer = Gamer.objects.get(user=request.auth.user)
+
+            try:
+                # Determine if the user is already signed up
+                registration = Gamer.objects.get(
+                    game=game, gamer=gamer)
+                return Response(
+                    {'message': 'Gamer already signed up this game.'},
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY
+                )
+            except Gamer.DoesNotExist:
+                # The user is not signed up.
+                registration = Gamer()
+                registration.game = game
+                registration.gamer = gamer
+                registration.save()
+
+                return Response({}, status=status.HTTP_201_CREATED)
+
+        # User wants to leave a previously joined game
+        elif request.method == "DELETE":
+            # Handle the case if the client specifies a game
+            # that doesn't exist
+            try:
+                game = Game.objects.get(pk=pk)
+            except Game.DoesNotExist:
+                return Response(
+                    {'message': 'Game does not exist.'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Get the authenticated user
+            gamer = Gamer.objects.get(user=request.auth.user)
+
+            try:
+                # Try to delete the signup
+                registration = Gamer.objects.get(
+                    game=game, gamer=gamer)
+                registration.delete()
+                return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+            except Gamer.DoesNotExist:
+                return Response(
+                    {'message': 'Not currently registered for the game.'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+        # If the client performs a request with a method of
+        # anything other than POST or DELETE, tell client that
+        # the method is not supported
+        return Response({}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+
 class GameSerializer(serializers.ModelSerializer):
     """JSON serializer for games
 
@@ -153,5 +217,5 @@ class GameSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Game
-        fields = ('id', 'title', 'number_of_players', 'description', 'year_released', 'estimated_time_to_play', 'age_recommendation', 'designer')
+        fields = ('id', 'title', 'number_of_players',  'description', 'year_released', 'estimated_time_to_play', 'age_recommendation')
         depth = 1

@@ -1,6 +1,6 @@
 [
     {
-        "model": "raterprojectapi.game_review",
+        "model": "raterprojectapi.gameReview",
         "pk": 1,
         "fields": {
             "review_descrip": "It was an god game",
@@ -10,7 +10,7 @@
         }
     },
     {
-        "model": "raterprojectapi.game_review",
+        "model": "raterprojectapi.gameReview",
         "pk": 2,
         "fields": {
             "review_descrip": "It was an okay game",
@@ -20,7 +20,7 @@
         }
     },
     {
-        "model": "raterprojectapi.game_review",
+        "model": "raterprojectapi.gameReview",
         "pk": 3,
         "fields": {
             "review_descrip": "It was an great game",

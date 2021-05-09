@@ -1,5 +1,5 @@
 from .gamer import Gamer
 from .game import Game
-from .game_category import GameCategory
-from .game_review import GameReview
+from .gameCategory import GameCategory
+from .gameReview import GameReview
 from .category import Category
