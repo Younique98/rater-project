@@ -1,6 +1,6 @@
 [
     {
-        "model": "levelupapi.game",
+        "model": "raterprojectapi.game",
         "pk": 1,
         "fields": {
             "title": "Welcome To",
@@ -13,7 +13,7 @@
         }
     },
     {
-        "model": "levelupapi.game",
+        "model": "raterprojectapi.game",
         "pk": 2,
         "fields": {
             "title": "Settlers of Catan",
@@ -26,7 +26,7 @@
         }
     },
     {
-        "model": "levelupapi.game",
+        "model": "raterprojectapi.game",
         "pk": 3,
         "fields": {
             "title": "Dungeons & Dragons",

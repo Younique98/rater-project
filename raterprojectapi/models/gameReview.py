@@ -7,3 +7,10 @@ class GameReview(models.Model):
     game_id = models.ForeignKey("Game", on_delete=models.CASCADE)
     rating = models.IntegerField()
     
+    @property
+    def joined(self):
+        return self.__joined
+
+    @joined.setter
+    def joined(self, value):
+        self.__joined = value

@@ -15,6 +15,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 # router is an instance of the default router class. default router class is built in to the django framework
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'categories', Categories, 'category')
+router.register(r'category', Categories, 'category')
 # r symbolizes is telling python it is a regex string
 # games on the left is what the url is suppose to be therefore /games
 #game on the right is the singular version of the route which tells django what the query/model will be to use for that route
@@ -25,5 +26,4 @@ urlpatterns = [
     path('', include(router.urls)),
     path('register', register_user),
     path('login', login_user),
-    path('api-auth', include('rest_framework.urls', namespace='rest_framework')),
 ]
