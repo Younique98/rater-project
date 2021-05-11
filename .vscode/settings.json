@@ -6,5 +6,6 @@
             "name": "Rater Project",
             "database": "db.sqlite3"
         }
-    ]
+    ],
+    "python.pythonPath": "/Users/ericathompson/.local/share/virtualenvs/raterproject-gd3eD6kK/bin/python"
 }
