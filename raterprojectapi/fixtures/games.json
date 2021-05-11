@@ -9,7 +9,8 @@
             "estimated_time_to_play": 30,
             "number_of_players": 4,
             "age_recommendation": 3,
-            "designer": 1
+            "designer": 1,
+            "category_id": 1
         }
     },
     {
@@ -22,7 +23,8 @@
             "estimated_time_to_play": 30,
             "number_of_players": 4,
             "age_recommendation": 4,
-            "designer": 2
+            "designer": 2,
+            "category_id": 1
         }
     },
     {
@@ -35,7 +37,8 @@
             "estimated_time_to_play": 30,
             "number_of_players": 5,
             "age_recommendation": 3,
-            "designer": 1
+            "designer": 1,
+            "category_id": 1
         }
     }
 ]

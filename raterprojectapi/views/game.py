@@ -6,7 +6,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
-from raterprojectapi.models import Game, Category, Gamer, GameReview
+from raterprojectapi.models import Game, Category, Gamer, GameReview, Follower
 
 
 class Games(ViewSet):
@@ -159,15 +159,15 @@ class Games(ViewSet):
 
             try:
                 # Determine if the user is already signed up
-                registration = Gamer.objects.get(
+                registration = Follower.objects.get(
                     game=game, gamer=gamer)
                 return Response(
-                    {'message': 'Gamer already signed up this game.'},
+                    {'message': 'Gamer already follows this game.'},
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY
                 )
-            except Gamer.DoesNotExist:
+            except Follower.DoesNotExist:
                 # The user is not signed up.
-                registration = Gamer()
+                registration = Follower()
                 registration.game = game
                 registration.gamer = gamer
                 registration.save()
@@ -182,7 +182,7 @@ class Games(ViewSet):
                 game = Game.objects.get(pk=pk)
             except Game.DoesNotExist:
                 return Response(
-                    {'message': 'Game does not exist.'},
+                    {'message': 'User is not following this game.'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
@@ -191,14 +191,14 @@ class Games(ViewSet):
 
             try:
                 # Try to delete the signup
-                registration = Gamer.objects.get(
+                registration = Follower.objects.get(
                     game=game, gamer=gamer)
                 registration.delete()
                 return Response(None, status=status.HTTP_204_NO_CONTENT)
 
-            except Gamer.DoesNotExist:
+            except Follower.DoesNotExist:
                 return Response(
-                    {'message': 'Not currently registered for the game.'},
+                    {'message': 'Not currently following this game.'},
                     status=status.HTTP_404_NOT_FOUND
                 )
 
@@ -217,5 +217,13 @@ class GameSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Game
-        fields = ('id', 'title', 'number_of_players',  'description', 'year_released', 'estimated_time_to_play', 'age_recommendation')
+        fields = ('id', 'title', 'number_of_players',  'description', 'year_released', 'estimated_time_to_play', 'age_recommendation', 'designer', 'category_id')
         depth = 1
+
+class Follower(serializers.ModelSerializer):
+    """JSON serializer for event organizer"""
+    user = GameSerializer(many=False)
+
+    class Meta:
+        model = Gamer
+        fields = ['user']

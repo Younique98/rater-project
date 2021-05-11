@@ -2,7 +2,7 @@ from django.conf.urls import include
 from django.urls import path
 from raterprojectapi.views import register_user, login_user
 from rest_framework import routers
-from raterprojectapi.views import Games, Profile, Categories
+from raterprojectapi.views import Games, Profile, Categories, GameReviews
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
@@ -16,14 +16,18 @@ from rest_framework.authtoken.views import obtain_auth_token
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'categories', Categories, 'category')
 router.register(r'category', Categories, 'category')
-# r symbolizes is telling python it is a regex string
+# r symbolizes is telling python it i
+# s a regex string
 # games on the left is what the url is suppose to be therefore /games
 #game on the right is the singular version of the route which tells django what the query/model will be to use for that route
+router.register(r'games', Games, 'games')
 router.register(r'games', Games, 'game')
+router.register(r'gamereview', GameReviews, 'review')
 router.register(r'profile', Profile, 'profile')
 #url patterns even though registered we have to add to the url patterns to hit the routes. so on the backend using localhost8000
 urlpatterns = [
     path('', include(router.urls)),
     path('register', register_user),
     path('login', login_user),
+    path('api-auth', include('rest_framework.urls', namespace='rest_framework')),
 ]
