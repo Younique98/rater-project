@@ -9,7 +9,7 @@ class Game(models.Model):
     number_of_players = models.IntegerField()
     age_recommendation = models.IntegerField()
     designer = models.CharField(max_length=50)
-    category_id = models.IntegerField()
+    categories = models.ManyToManyField("Category", through="GameCategory")
 
     @property
     def joined(self):
