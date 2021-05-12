@@ -72,8 +72,17 @@ class GameReviews(ViewSet):
         Returns:
             Response -- JSON serialized list of game types
         """
+        
         game_reviews = GameReview.objects.all()
-
+        game = self.request.query_params.get("game", None)
+        
+        # Set the `joined` property on every event
+       
+        if game is not None:
+            game_reviews = game_reviews.filter(game_id__id= game)
+        # game = self.request.query_params.get('gameId', None)
+        # gamer = Gamer.objects.get(user=request.auth.user)
+        # reviewed_game = Game.objects.get(pk="game_id")
         # Note the addtional `many=True` argument to the
         # serializer. It's needed when you are serializing
         # a list of objects instead of a single object.
