@@ -20,6 +20,8 @@ router.register(r'category', Categories, 'category')
 # s a regex string
 # games on the left is what the url is suppose to be therefore /games
 #game on the right is the singular version of the route which tells django what the query/model will be to use for that route
+
+router.register(r'gamer', Games, 'games')
 router.register(r'games', Games, 'games')
 router.register(r'games', Games, 'game')
 router.register(r'gamereview', GameReviews, 'review')

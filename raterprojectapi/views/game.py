@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from rest_framework import status
 from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
@@ -39,7 +40,6 @@ class Games(ViewSet):
         # whose `id` is what the client passed as the
         # `categoryId` in the body of the request.
         category = Category.objects.get(pk=request.data["categoryId"])
-        game.category = category
 
         # game_review = GameReview.objects.get(pk=request.data["gameReviewId"])
         # game.game_review = game_review
@@ -49,6 +49,7 @@ class Games(ViewSet):
         # JSON as a response to the client request
         try:
             game.save()
+            game.categories.add(category)
             serializer = GameSerializer(game, context={'request': request})
             return Response(serializer.data)
 
@@ -84,7 +85,9 @@ class Games(ViewSet):
         Returns:
         Response -- Empty body with 204 status code
         """
-        game = Game()
+        gamer = Gamer.objects.get(user=request.auth.user)
+
+        game = Game.objects.get(pk=pk)
         game.title = request.data["title"]
         game.description = request.data["description"]
         game.number_of_players = request.data["numberOfPlayers"]
@@ -97,11 +100,12 @@ class Games(ViewSet):
         # Use the Django ORM to get the record from the database
         # whose `id` is what the client passed as the
         # `categoryId` in the body of the request.
-        category = Category.objects.get(pk=request.data["categoryId"])
-        game.category = category
 
-        game_review = GameReview.objects.get(pk=request.data["gameReviewId"])
-        game.game_review = game_review
+
+
+        if request.data.get("categoryId") is not None:
+            category = Category.objects.get(pk=request.data["categoryId"])
+            game.categories.add(category)
         game.save()
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
@@ -133,6 +137,7 @@ class Games(ViewSet):
         # Get all game records from the database
         games = Game.objects.all()
 
+
         # Support filtering games by type
         #    http://localhost:8000/games?type=1
         #
@@ -145,6 +150,8 @@ class Games(ViewSet):
             games, many=True, context={'request': request})
         return Response(serializer.data)
 
+    
+    @action(methods=['post', 'delete'], detail=True)
     def signup(self, request, pk=None):
         """Managing gamers signing up for games"""
 
@@ -217,7 +224,7 @@ class GameSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Game
-        fields = ('id', 'title', 'number_of_players',  'description', 'year_released', 'estimated_time_to_play', 'age_recommendation', 'designer', 'category_id')
+        fields = ('id', 'title', 'number_of_players',  'description', 'year_released', 'estimated_time_to_play', 'age_recommendation', 'designer', 'categories')
         depth = 1
 
 class Follower(serializers.ModelSerializer):
