@@ -34,6 +34,7 @@ class Games(ViewSet):
         game.estimated_time_to_play = request.data["estimatedTimeToPlay"]
         game.age_recommendation = request.data["ageRecommendation"]
         game.designer = request.data["designer"]
+        game.age_recommendation = request.data[""]
         game.gamer = gamer
 
         # Use the Django ORM to get the record from the database
@@ -166,15 +167,15 @@ class Games(ViewSet):
 
             try:
                 # Determine if the user is already signed up
-                registration = Follower.objects.get(
+                registration = Gamer.objects.get(
                     game=game, gamer=gamer)
                 return Response(
                     {'message': 'Gamer already follows this game.'},
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY
                 )
-            except Follower.DoesNotExist:
+            except Gamer.DoesNotExist:
                 # The user is not signed up.
-                registration = Follower()
+                registration = Gamer()
                 registration.game = game
                 registration.gamer = gamer
                 registration.save()
@@ -209,6 +210,21 @@ class Games(ViewSet):
                     status=status.HTTP_404_NOT_FOUND
                 )
 
+
+    @property
+    def average_rating(self):
+        """Average rating calculated attribute for each game"""
+        ratings = GameRating.objects.filter(game=self)
+
+    # Sum all of the ratings for the game
+        total_rating = 0
+        for rating in ratings:
+            total_rating += rating.rating
+
+    # Calculate the averge and return it.
+    # If you don't know how to calculate averge, Google it.
+
+
         # If the client performs a request with a method of
         # anything other than POST or DELETE, tell client that
         # the method is not supported
@@ -224,7 +240,7 @@ class GameSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Game
-        fields = ('id', 'title', 'number_of_players',  'description', 'year_released', 'estimated_time_to_play', 'age_recommendation', 'designer', 'categories')
+        fields = ('id', 'title', 'number_of_players',  'description', 'year_released', 'estimated_time_to_play', 'age_recommendation', 'designer', 'categories', 'average_rating')
         depth = 1
 
 class Follower(serializers.ModelSerializer):
