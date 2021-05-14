@@ -10,7 +10,7 @@
             "number_of_players": 4,
             "age_recommendation": 3,
             "designer": 1,
-            "category_id": 1
+            "categories": [1]
         }
     },
     {
@@ -24,7 +24,7 @@
             "number_of_players": 4,
             "age_recommendation": 4,
             "designer": 2,
-            "category_id": 1
+            "categories": [1]
         }
     },
     {
@@ -38,7 +38,7 @@
             "number_of_players": 5,
             "age_recommendation": 3,
             "designer": 1,
-            "category_id": 1
+            "categories": [1]
         }
     }
 ]
