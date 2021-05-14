@@ -10,7 +10,7 @@ class Game(models.Model):
     age_recommendation = models.IntegerField()
     designer = models.CharField(max_length=50)
     categories = models.ManyToManyField("Category", through="GameCategory")
-
+    average_rating = models.IntegerField()
     @property
     def joined(self):
         return self.__joined
