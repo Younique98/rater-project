@@ -16,6 +16,7 @@ class GameReviews(ViewSet):
             Response -- JSON serialized game instance
         """
         gamer = Gamer.objects.get(user=request.auth.user)
+        game = Game.objects.get(pk=request.data["gameId"])
         # Uses the token passed in the `Authorization` header
         # gamer = Gamer.objects.get(user=request.auth.user)
 
@@ -24,15 +25,13 @@ class GameReviews(ViewSet):
         # body of the request from the client.
         game_review = GameReview()
         game_review.review_descrip = request.data["reviewDescrip"]
-        game_review.gamer_id = request.data["gamerId"]
-        game_review.game_id = request.data["gameId"]
+        game_review.gamer_id = gamer
+        game_review.game_id = game
         game_review.rating = request.data["rating"]
-        game_review.gamer = gamer
 
         # Use the Django ORM to get the record from the database
         # whose `id` is what the client passed as the
-        category = GameCategory.objects.get(pk=request.data["categoryId"])
-        game_review.category = category
+
 
         # game_review = GameReview.objects.get(pk=request.data["gameReviewId"])
         # game.game_review = game_review
