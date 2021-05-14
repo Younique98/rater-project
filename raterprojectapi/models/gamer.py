@@ -13,6 +13,6 @@ def upload_to(instance, filename):
 
 class Gamer(models.Model):
     # …
-    currently_playing_image = models.ImageField(_("Avatar"), upload_to=upload_to, blank=True)
+    currently_playing_image = models.ImageField(upload_to=upload_to, blank=True)
     bio = models.CharField(max_length=50)
     user = models.OneToOneField(User, on_delete=models.CASCADE)

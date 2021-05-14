@@ -41,7 +41,7 @@ class GamerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Gamer
-        fields = ('user', 'bio')
+        fields = ('user', 'bio', 'currently_playing_image')
 
 
 class GameSerializer(serializers.ModelSerializer):
