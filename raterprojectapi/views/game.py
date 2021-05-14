@@ -211,15 +211,6 @@ class Games(ViewSet):
                 )
 
 
-    @property
-    def average_rating(self):
-        """Average rating calculated attribute for each game"""
-        ratings = GameRating.objects.filter(game=self)
-
-    # Sum all of the ratings for the game
-        total_rating = 0
-        for rating in ratings:
-            total_rating += rating.rating
 
     # Calculate the averge and return it.
     # If you don't know how to calculate averge, Google it.

@@ -1,4 +1,6 @@
+from raterprojectapi.models.gameReview import GameReview
 from django.db import models
+
 
 class Game(models.Model):
 
@@ -10,11 +12,12 @@ class Game(models.Model):
     age_recommendation = models.IntegerField()
     designer = models.CharField(max_length=50)
     categories = models.ManyToManyField("Category", through="GameCategory")
-    average_rating = models.IntegerField()
     @property
-    def joined(self):
-        return self.__joined
+    def average_rating(self):
+        """Average rating calculated attribute for each game"""
+        ratings = GameReview.objects.filter(game_id=self)
 
-    @joined.setter
-    def joined(self, value):
-        self.__joined = value
+    # Sum all of the ratings for the game
+        total_rating = 0
+        for rating in ratings:
+            total_rating += rating.rating
