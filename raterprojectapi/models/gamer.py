@@ -6,10 +6,11 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 
 def upload_to(instance, filename):
+    print(instance)
     now = timezone.now()
     base, extension = os.path.splitext(filename.lower())
     milliseconds = now.microsecond // 1000
-    return f"users/{instance.pk}/{now:%Y%m%d%H%M%S}{milliseconds}{extension}"
+    return f"users/13/{now:%Y%m%d%H%M%S}{milliseconds}{extension}"
 
 class Gamer(models.Model):
     # …
