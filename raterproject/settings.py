@@ -150,5 +150,8 @@ REST_FRAMEWORK = {
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "raterproject", "site_static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "raterproject", "static")
-MEDIA_ROOT = os.path.join(BASE_DIR, "raterproject", "media")
+# MEDIA_ROOT = os.path.join(BASE_DIR, "raterproject", "media")
 MEDIA_URL = "/media/"
+
+# Path where media is stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

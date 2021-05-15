@@ -4,8 +4,9 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from raterprojectapi.models import Gamer
-
+from rest_framework.permissions import AllowAny
 
 @csrf_exempt
 def login_user(request):
@@ -36,7 +37,6 @@ def login_user(request):
             data = json.dumps({"valid": False})
             return HttpResponse(data, content_type='application/json')
 
-
 @csrf_exempt
 def register_user(request):
     '''Handles the creation of a new gamer for authentication
@@ -51,18 +51,18 @@ def register_user(request):
     # Create a new user by invoking the `create_user` helper method
     # on Django's built-in User model
     new_user = User.objects.create_user(
-        username=req_body['username'],
-        email=req_body['email'],
+        username=req_body['email'],
         password=req_body['password'],
         first_name=req_body['first_name'],
-        last_name=req_body['last_name']
+        last_name=req_body['last_name'],
+        email=req_body['email']
     )
 
-    # Now save the extra info in the raterproject_gamer table
+    # Now save the extra info in the levelupapi_gamer table
     gamer = Gamer.objects.create(
         bio=req_body['bio'],
         user=new_user,
-        currently_playing_image=req_body['currently_playing_image']
+        currently_playing_image=req_body['uploadCurrentGamePlaying']
     )
 
     # Commit the user to the database by saving it
